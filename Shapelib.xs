@@ -2,7 +2,7 @@
 #include "perl.h"
 #include "XSUB.h"
 
-#include <shapelib/shapefil.h>
+#include <shapefil.h>
 
 #undef min
 #define min(x, y) ((x)<(y) ? (x) : (y))

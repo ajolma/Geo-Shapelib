@@ -88,8 +88,8 @@ or
     my $shapefile = new Geo::Shapelib { 
         Name => 'stations',
         Shapetype => POINT,
-        FieldNames => ['Name','Code','Founded'];
-        FieldTypes => ['String:50','String:10','Integer:8'];
+        FieldNames => ['Name','Code','Founded'],
+        FieldTypes => ['String:50','String:10','Integer:8']
     };
 
     while (<DATA>) {
@@ -1223,7 +1223,7 @@ __END__
 
 =head1 AUTHOR
 
-Ari Jolma, ari.jolma at tkk.fi
+Ari Jolma, ari.jolma at gmail.com
 
 =head1 LIMITATIONS
 
