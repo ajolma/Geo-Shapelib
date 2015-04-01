@@ -1229,6 +1229,8 @@ Ari Jolma, ari.jolma at gmail.com
 
 =head1 SEE ALSO
 
+L<Geo-Shapelib in github|https://github.com/ajolma/Geo-Shapelib>
+
 perl(1).
 
 =cut
