@@ -1,5 +1,11 @@
 use ExtUtils::MakeMaker;
 
+my $mm_ver = $ExtUtils::MakeMaker::VERSION;
+if ($mm_ver =~ /_/) { # dev version
+    $mm_ver = eval $mm_ver;
+    die $@ if $@;
+}
+
 WriteMakefile(
     'NAME'		=> 'Geo::Shapelib',
     'VERSION_FROM'	=> 'Shapelib.pm',
@@ -16,6 +22,20 @@ WriteMakefile(
 
     'DEFINE'		=> '-ggdb',
     clean               => {'FILES' => 'stations.* example/test.*'},
+
+    ($mm_ver <= 6.45
+        ? ()
+        : (META_MERGE => {
+            'meta-spec' => { version => 2 },
+            resources => {
+                repository  => {
+                    type => 'git',
+                    web  => 'https://github.com/ajolma/Geo-Shapelib',
+                    url  => 'https://github.com/ajolma/Geo-Shapelib.git',
+                },
+            },
+          })
+    ),
     
 );
 
