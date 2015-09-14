@@ -10,7 +10,7 @@ BEGIN { $| = 1; }
 END {print "not ok 1\n" unless $loaded;}
 
 use Geo::Shapelib qw /:all/;
-use Test::Simple tests => 20;
+use Test::More tests => 22;
 
 $loaded = 1;
 
@@ -69,15 +69,21 @@ $shape->save();
 
 ok(1, "save");
 
-my $shape2 = new Geo::Shapelib $shapefile, {Rtree=>1};
+{
+    my $shape2 = new Geo::Shapelib $shapefile, {Rtree=>1};
 
-ok(ref($shape2->{Rtree}) eq 'Tree::R', "Rtree");
+    ok(ref($shape2->{Rtree}) eq 'Tree::R', "Rtree");
 
-$test = $shape->{Shapes}->[2]->{Vertices}->[0]->[1] == 
-    $shape2->{Shapes}->[2]->{Vertices}->[0]->[1] and 
-    $shape->{Shapes}->[2]->{Vertices}->[0]->[1] == 6722622;
+    $test = $shape->{Shapes}->[2]->{Vertices}->[0]->[1] == 
+        $shape2->{Shapes}->[2]->{Vertices}->[0]->[1] and 
+        $shape->{Shapes}->[2]->{Vertices}->[0]->[1] == 6722622;
 
-ok($test, 'Rtree seems to work');
+    ok($test, 'Rtree seems to work');
+
+    is_deeply ($shape2->query_within_rect(
+                   [3382750, 6690570, 3394250, 6698260]), [0, 8], "Quadtree spatial query" );
+    ok ($shape2->create_spatial_index, "Create Quadtree index");
+}
 
 $example = "example/xyz";
 
@@ -177,9 +183,11 @@ $shape = new Geo::Shapelib $shapefile;
 ok($shape->{Shapes}[0]->{Vertices}[4][0] == -1, 'save multipart, vertices');
 ok($shape->{Shapes}[0]->{Parts}[1][0] == 5, 'save multipart, parts');
 
-system "rm -f $shapefile.*";
-
-
+END {
+    foreach ( 'shp', 'shx', 'dbf', 'qix', 'dump' ) {
+        unlink "$shapefile.$_";
+    }
+}
 
 __DATA__
 Helsinki-Vantaan Lentoasema|HVL|19780202|3387419|6692222

@@ -1,25 +1,32 @@
 use ExtUtils::MakeMaker;
 
+my $shapelib_version = '1.2.0';
+
+my @shapelib_version = $shapelib_version =~ /(\d)\.(\d)\.(\d)/;
+my $libs;
+my $inc;
+my $define;
+if ($shapelib_version[0]*10000+$shapelib_version[1]*100+$shapelib_version[2] >= 10300) {
+    $libs = ['-L/home/ajolma/Lataukset/shapelib-1.3.0 -lshp'];
+    $inc = '-I/home/ajolma/Lataukset/shapelib-1.3.0';
+    $define = '-DSHAPELIB_1_3_0';
+} else {
+    $libs = ['-L/usr/local/lib -L/usr/lib/x86_64-linux-gnu -lshp'];
+    $inc = '-I/usr/local/include';
+    $define = undef;
+}
+
 WriteMakefile(
-    NAME		=> 'Geo::Shapelib',
-    VERSION_FROM	=> 'lib/Geo/Shapelib.pm',
+    NAME                => 'Geo::Shapelib',
+    VERSION_FROM        => 'lib/Geo/Shapelib.pm',
     PREREQ_PM           => {Tree::R => 0.01}, # e.g., Module::Name => 1.1
     ABSTRACT_FROM       => 'lib/Geo/Shapelib.pm',
-
-# next 2 lines for external libshp, uncomment if you want to use an external libshp
-    LIBS		=> ['-L/usr/local/lib -lshp'], # change if you have libshp somewhere else
-    INC		        => '-I/usr/local/include',     # change if you have shapefil.h somewhere else
-
-# next 3 lines for internal libshp, comment out if you want to use an external libshp
-#    LIBS		=> [''],                       
-#    MYEXTLIB           => 'shapelib/libshp$(LIB_EXT)',# internal libshp
-#    INC		=> '-I./',
-
-#    DEFINE		=> '-ggdb',
+    LIBS                => $libs,
+    DEFINE              => $define,
+    INC                 => $inc,
     clean               => {'FILES' => 'stations.* example/test.*'},
-
-    AUTHOR            => 'Ari Jolma <https://github.com/ajolma>',
-    LICENSE           => 'perl_5',
+    AUTHOR              => 'Ari Jolma <https://github.com/ajolma>',
+    LICENSE             => 'perl_5',
     META_MERGE => {
         'meta-spec' => { version => 2 },
         resources => {

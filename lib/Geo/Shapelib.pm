@@ -3,6 +3,7 @@ package Geo::Shapelib;
 use strict;
 use Carp;
 use Tree::R;
+use File::Basename qw(fileparse);
 use vars qw($VERSION @ISA @EXPORT %EXPORT_TAGS @EXPORT_OK $AUTOLOAD);
 use vars qw(%ShapeTypes %PartTypes);
 
@@ -699,6 +700,55 @@ sub lengths {
     }
     
     return @l;
+}
+
+=pod
+
+=head2 Using shapefile quadtree spatial indexing
+
+Obtain a list of shape ids within the specified bound using a shapefile quadtree
+index:
+
+    $shapefile->query_within_rect($bounds, $maxdepth = 0);
+
+$bounds should be an array reference of 4 elements (xmin, ymin, xmax, ymax)
+
+This method uses the quadtree indices defined by Shapelib *not* ESRI
+spatial index files (.sbn, .sbx). If a quadtree index (<basename>.qix)
+does not exist, one is created and saved as a file.
+
+To just create an index you can also use the method:
+
+    $shapefile->create_spatial_index($maxdepth = 0);
+
+$maxdepth (optional) is the maximum depth of the index to create. Default is 0
+meaning that shapelib will calculate a reasonable default depth.
+
+=cut
+
+sub query_within_rect {
+    my ($self, $bounds, $maxdepth) = @_;
+    croak "Shapefile is not open." unless $self->{SHPHandle};
+    my $fn = $self->qix_filename;
+    $maxdepth ||= 0;
+    my $found = SHPSearchDiskTree($self->{SHPHandle}, $fn, $bounds, $maxdepth);
+    return $found;
+}
+
+sub create_spatial_index {
+    my ($self, $maxdepth, $quiet) = @_;
+    $maxdepth ||= 0;
+    croak "Shapefile is not open." unless $self->{SHPHandle};
+    my $fn = $self->qix_filename;
+    my $ret = SHPCreateSpatialIndex($fn, $maxdepth, $self->{SHPHandle});
+    croak "Could not create the spatial index file: $fn." if !$ret;
+    return $ret;
+}
+
+sub qix_filename {
+    my $self = shift;
+    my ($file, $path, $suffix) = fileparse( $self->{Name}, '.shp' );
+    return "$path$file.qix";
 }
 
 =pod
