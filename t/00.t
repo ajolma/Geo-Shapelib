@@ -59,7 +59,7 @@ ok($shape, 'new from data');
 
 $rec = $shape->get_record_hashref(0);
 
-ok($rec->{Founded} == 19780202, 'get_record_hashref');
+ok($rec->{Founded} == 19780202, "get_record_hashref, $rec->{Founded} == 19780202");
 
 $shape->dump("$shapefile.dump");
 
@@ -81,20 +81,22 @@ ok($test, 'Rtree seems to work');
 
 $example = "example/xyz";
 
-$shape = new Geo::Shapelib $example, {Load=>0};
+{
+    $shape = new Geo::Shapelib $example, {Load=>0};
 
-$rec = $shape->get_record_hashref(0);
+    my $rec = $shape->get_record_hashref(0);
+    my $y = sprintf("%.2f", $rec->{Y});
 
-ok($rec->{Y} == 4235332.51, 'get_record_hashref (unloaded rec)');
-
-$shape->save($shapefile);
-
-for ('.shp','.dbf') {
-    @stat1 = stat $example.$_;
-    @stat2 = stat $shapefile.$_;
-    ok($stat1[7] == $stat2[7], "cmp $_ files");
+    ok($y == 4235332.51, "get_record_hashref (unloaded rec) $rec->{Y} ~ 4235332.51");
+    
+    $shape->save($shapefile);
+    
+    for ('.shp','.dbf') {
+        @stat1 = stat $example.$_;
+        @stat2 = stat $shapefile.$_;
+        ok($stat1[7] == $stat2[7], "cmp $_ files");
+    }
 }
-
 
 $shape = new Geo::Shapelib $example, {Load=>0};
 $shape2 = new Geo::Shapelib {

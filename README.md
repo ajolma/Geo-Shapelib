@@ -12,8 +12,8 @@ To install this module type the following:
 
 DEPENDENCIES
 
-Geo::Shapelib.pm requires Frank Warmerdam's Shapefile C Library
-from http://shapelib.maptools.org/
+Geo::Shapelib.pm requires Shapefile C Library from
+http://shapelib.maptools.org/
 
 Chances are that you can install it with sudo apt-get install
 libshp-dev or something similar.
