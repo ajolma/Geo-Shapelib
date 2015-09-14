@@ -1,8 +1,7 @@
 Changes
-Copying
+LICENSE
 MANIFEST
-README
-TODO
+README.md
 typemap
 Makefile.PL
 test.pl
@@ -13,3 +12,5 @@ example/xyz.sbn
 example/xyz.sbx
 example/xyz.shp
 example/xyz.shx
+META.yml
+META.json
