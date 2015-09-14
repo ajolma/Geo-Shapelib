@@ -12,7 +12,7 @@ use AutoLoader 'AUTOLOAD';
 
 @ISA = qw(Exporter DynaLoader);
 
-$VERSION = '0.20';
+$VERSION = '0.21';
 
 bootstrap Geo::Shapelib $VERSION;
 
