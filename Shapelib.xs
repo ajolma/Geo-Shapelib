@@ -339,7 +339,7 @@ SHPCreateSpatialIndex(filename, iMaxDepth, hSHP)
     INIT:
         SHPTree	*psTree;
     CODE:
-#ifdef SHAPELIB_1_3_0
+#ifdef HAS_SEARCH_DISK_TREE
         psTree = SHPCreateTree( hSHP, 2, iMaxDepth, NULL, NULL );
         SHPTreeTrimExtraNodes( psTree );
         SHPWriteTree( psTree, filename );
@@ -385,17 +385,15 @@ SHPSearchDiskTree(hSHP, filename, svBounds, MaxDepth)
         results = (AV *)sv_2mortal((SV *)newAV());
     CODE:
         SHPTree *tree = NULL;
-#ifdef SHAPELIB_1_3_0
+#ifdef HAS_SEARCH_DISK_TREE
         FILE *qix = fopen(filename, "r");
         if (!qix) {
-           fprintf(stderr, "create qix\n");
            tree = SHPCreateTree( hSHP, 2, 0, NULL, NULL );
            SHPTreeTrimExtraNodes( tree );
            SHPWriteTree( tree, filename );
            panResult = SHPTreeFindLikelyShapes( tree, adfSearchMin, adfSearchMax,
                                                 &nResultCount );
         } else {
-           fprintf(stderr, "open qix\n");
            panResult = SHPSearchDiskTree( qix, adfSearchMin, adfSearchMax,
                                           &nResultCount );
            
@@ -424,7 +422,7 @@ SHPSearchDiskTree(hSHP, filename, svBounds, MaxDepth)
         free( panResult );
         if (tree)
             SHPDestroyTree( tree );
-#ifdef SHAPELIB_1_3_0
+#ifdef HAS_SEARCH_DISK_TREE
         if (qix)
             fclose(qix);
 #endif
