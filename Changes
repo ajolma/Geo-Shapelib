@@ -69,3 +69,6 @@ Revision history for Perl extension Geo::Shapelib.
 	- lengths
 0.20 released Jan 15 2006
 	- some bugfixes related to NShapes
+0.21 released Sep 15 2015
+        - remove shapelib from the distribution
+        - add quadtree support

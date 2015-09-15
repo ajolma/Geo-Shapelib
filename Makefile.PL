@@ -29,9 +29,11 @@ unless (defined $ARGV{shapelib}) {
 }
 die "Can't find shapelib.\n".
     "Please install a development version of shapelib or\n".
-    "specify the location of libshp.a or libshp.so with".
-    "command line parameter --shapefile= or with environment".
-    "variable PERL_SHAPELIB." unless -e $ARGV{shapelib};
+    "specify the location of libshp.a or libshp.so with\n".
+    "command line parameter --shapefile= or with environment\n".
+    "variable PERL_SHAPELIB.\n".
+    "You can get shapelib from http://download.osgeo.org/shapelib/."
+    unless -e $ARGV{shapelib};
 
 # Does the shapelib define SHPSearchDiskTree?
 my $HAS_SEARCH_DISK_TREE;

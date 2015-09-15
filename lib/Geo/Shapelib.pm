@@ -1273,15 +1273,10 @@ __END__
 
 =head1 AUTHOR
 
-Ari Jolma, ari.jolma at gmail.com
+Ari Jolma, https://github.com/ajolma
 
-=head1 LIMITATIONS
+=head1 REPOSITORY
 
-=head1 SEE ALSO
-
-L<Geo-Shapelib in github|https://github.com/ajolma/Geo-Shapelib>
-
-perl(1).
+L<https://github.com/ajolma/Geo-Shapelib>
 
 =cut
-
