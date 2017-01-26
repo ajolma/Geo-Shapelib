@@ -10,7 +10,7 @@ BEGIN { $| = 1; }
 END {print "not ok 1\n" unless $loaded;}
 
 use Geo::Shapelib qw /:all/;
-use Test::More tests => 22;
+use Test::More tests => 12;
 
 $loaded = 1;
 
