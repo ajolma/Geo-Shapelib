@@ -72,3 +72,7 @@ Revision history for Perl extension Geo::Shapelib.
 0.21 released Sep 15 2015
         - remove shapelib from the distribution
         - add quadtree support
+0.22 released Jan 26 2017
+     - fix error https://rt.cpan.org/Public/Bug/Display.html?id=119994
+     - do not run file size comparison tests
+     
