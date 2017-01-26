@@ -15,7 +15,7 @@ $ARGV{shapelib} = $ENV{PERL_SHAPELIB} unless defined $ARGV{shapelib};
 unless (defined $ARGV{shapelib}) {
     # scan known possible locations in the order of preference:
     my @locs;
-    for (qw(/usr/lib /usr/lib/x86_64-linux-gnu /usr/local/lib)) {
+    for (qw(/usr/lib /usr/lib64 /usr/lib/x86_64-linux-gnu /usr/local/lib /usr/local/lib64)) {
         # prefer a shared lib
         my $lib = $_ . '/libshp.so';
         $lib = $_ . '/libshp.a' unless -e $lib;
@@ -30,7 +30,7 @@ unless (defined $ARGV{shapelib}) {
 die "Can't find shapelib.\n".
     "Please install a development version of shapelib or\n".
     "specify the location of libshp.a or libshp.so with\n".
-    "command line parameter --shapefile= or with environment\n".
+    "command line parameter --shapelib= or with environment\n".
     "variable PERL_SHAPELIB.\n".
     "You can get shapelib from http://download.osgeo.org/shapelib/."
     unless -e $ARGV{shapelib};
