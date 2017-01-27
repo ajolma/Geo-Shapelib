@@ -264,6 +264,8 @@ This one creates a new, blank Perl shapefile object:
        Rtree => 1
    };
 
+=over 8
+
 =item Options:
 
 Like:
@@ -451,7 +453,7 @@ sub new {
     return $self;
 }
 
-=pod
+=back
 
 =head1 METHODS
 
