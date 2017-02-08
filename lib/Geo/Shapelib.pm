@@ -1277,6 +1277,11 @@ __END__
 
 Ari Jolma, https://github.com/ajolma
 
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
 =head1 REPOSITORY
 
 L<https://github.com/ajolma/Geo-Shapelib>
