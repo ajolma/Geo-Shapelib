@@ -266,7 +266,7 @@ This one creates a new, blank Perl shapefile object:
 
 =over 8
 
-=item Options:
+=head2 Options:
 
 Like:
 
